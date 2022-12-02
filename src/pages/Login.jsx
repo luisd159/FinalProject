@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function Login() {
   
@@ -58,3 +60,5 @@ export default function Login() {
     </div>
   )
 }
+
+
