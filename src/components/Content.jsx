@@ -1,154 +1,149 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Container, Col, Row, Button } from 'react-bootstrap'
 import { Modal, ModalBody, ModalFooter, ModalHeader, FormGroup } from 'reactstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { useAuthContext } from '../Auth.context';
 
-const data = []
 
-class Content extends React.Component {
-    constructor(props) {
-        super()
+export default function Content() {
+    const { user, isLoggedIn, logout } = useAuthContext()
+
+    const [dataForm, setDataForm] = useState(data)
+    const [modalShow, setModalShow] = useState(false)
+    const [title, setTitle] = useState("")
+    const [date, setDate] = useState("")
+    const [place, setPlace] = useState("")
+
+    const form = {
+        title,
+        date,
+        place
+    }
+    const handleModalShow = () => {
+        setModalShow(true)
     }
 
-    state = {
-        data: data,
-        modalShow: false,
-        form: {
-            title: '',
-            date: '',
-            place: '',
-        },
+    const handleOffModalShow = () => {
+        setModalShow(false)
     }
 
-    showModalAdd = () => {
-        this.setState({
-            modalShow: true,
-        });
-    };
-
-    hideModalAdd = () => {
-        this.setState({ modalShow: false });
-    };
-
-    insertar = () => {
-        var valorNuevo = { ...this.state.form };
-        var lista = this.state.data;
-        console.log(lista)
-        lista.push(valorNuevo);
-        console.log(lista)
-        this.setState({ modalShow: false, data: lista });
+    const handleChangeTitle = (e) => {
+        setTitle(e.target.value)
+    }
+    const handleChangeDate = (e) => {
+        setDate(e.target.value)
+    }
+    const handleChangePlace = (e) => {
+        setPlace(e.target.value)
     }
 
-    handleChange = (e) => {
-        this.setState({
-            form: {
-                ...this.state.form,
-                [e.target.name]: e.target.value,
-            },
-        });
-    };
-
-    render() {
-        return (
-            <>
-                <PageContent>
-                    <div className='title'>
-                        <button className='btn btn-primary mb-4' onClick={() => this.showModalAdd()}>Añade un Evento</button>
-                        <h1>Eventos Disponibles</h1>
-                        <hr />
-                    </div>
-                    <Container>
-                        <Row>
-                            {this.state.data.map((evento) => (
-                                // Estos elementos se añaden con el crud
-                                <Col lg={3}>
-                                    <div className='card text-center'>
-                                        <a href="/">
-                                            <img src={require("../imgs/shout.png")} alt="" />
-                                        </a>
-                                        <h3 className='text-center px-3 my-1'>{evento.title}</h3>
-                                        <hr className='mx-3' />
-                                        <Row>
-                                            <div className='date col col-4'>
-                                                <h6>{evento.date}</h6>
-                                            </div>
-                                            <div className='buy col col-8 text-center'>
-                                                <p>{evento.place}</p>
-                                                <Button>Comprar Entrada</Button>
-                                            </div>
-                                        </Row>
-                                    </div>
-                                </Col>
-                            ))}
-                        </Row>
-                    </Container>
-                </PageContent>
-                <Modal isOpen={this.state.modalShow}>
-                    <ModalHeader>
-                        <div><h3>Añadir Evento</h3></div>
-                    </ModalHeader>
-
-                    <ModalBody>
-
-                        <FormGroup>
-                            <label>
-                                Título:
-                            </label>
-                            <input
-                                className="form-control"
-                                name="title"
-                                type="text"
-                                onChange={this.handleChange}
-                            />
-                        </FormGroup>
-
-                        <FormGroup>
-                            <label>
-                                Fecha:
-                            </label>
-                            <input
-                                className="form-control"
-                                name="date"
-                                type="date"
-                                onChange={this.handleChange}
-                            />
-                        </FormGroup>
-
-                        <FormGroup>
-                            <label>
-                                Lugar:
-                            </label>
-                            <input
-                                className="form-control"
-                                name="place"
-                                type="text"
-                                onChange={this.handleChange}
-                            />
-                        </FormGroup>
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <Button
-                            color="primary"
-                            onClick={() => this.insertar()}
-                        >
-                            Añadir
-                        </Button>
-                        <Button
-                            className="btn btn-danger"
-                            onClick={() => this.hideModalAdd()}
-                        >
-                            Cancelar
-                        </Button>
-                    </ModalFooter>
-                </Modal>
-            </>
-        )
+    var data = JSON.parse(localStorage.getItem("events")) ? JSON.parse(localStorage.getItem("events")) : []
+    
+    const insertar = () => {
+        data.push(form)
+        localStorage.setItem("events", JSON.stringify(data))
+        setModalShow(false)
     }
+    
+    return (
+        <>
+            <PageContent>
+                <div className='title'>
+                    <h1>Bienvenido {user ? user.username : "Tilin"}</h1>
+                    {user != null && (user["isSeller"]===true && <button className='btn btn-primary mb-4' onClick={handleModalShow}>Añade un Evento</button>)}
+                    <h1>Eventos Disponibles</h1>
+                    <hr />
+                </div>
+                <Container>
+                    <Row>
+                        {data.map((event) => (
+                            // Estos elementos se añaden con el crud
+                            <Col lg={3}>
+                                <div className='card text-center'>
+                                    <a href="/">
+                                        <img src={require("../imgs/shout.png")} alt="" />
+                                    </a>
+                                    <h3 className='text-center px-3 my-1'>{event.title}</h3>
+                                    <hr className='mx-3' />
+                                    <Row>
+                                        <div className='date col col-4'>
+                                            <h6>{event.date}</h6>
+                                        </div>
+                                        <div className='buy col col-8 text-center'>
+                                            <p>{event.place}</p>
+                                            <Button>Comprar Entrada</Button>
+                                        </div>
+                                    </Row>
+                                </div>
+                            </Col>
+                        ))}
+                    </Row>
+                </Container>
+            </PageContent>
+            <Modal isOpen={modalShow}>
+                <ModalHeader>
+                    <div><h3>Añadir Evento</h3></div>
+                </ModalHeader>
+                <ModalBody>
+                    <FormGroup>
+                        <label>
+                            Título:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="title"
+                            type="text"
+                            onChange={handleChangeTitle}
+                            value={title}
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <label>
+                            Fecha:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="date"
+                            type="date"
+                            onChange={handleChangeDate}
+                            value={date}
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <label>
+                            Lugar:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="place"
+                            type="text"
+                            onChange={handleChangePlace}
+                            value={place}
+                        />
+                    </FormGroup>
+                </ModalBody>
+                <ModalFooter>
+                    <Button
+                        color="primary"
+                        onClick={insertar}
+                    >
+                        Añadir
+                    </Button>
+                    <Button
+                        className="btn btn-danger"
+                        onClick={handleOffModalShow}
+                    >
+                        Cancelar
+                    </Button>
+                </ModalFooter>
+            </Modal>
+        </>
+    )
+
 }
-
-export default Content
 
 const PageContent = styled.div`
     margin-left: 3rem; 

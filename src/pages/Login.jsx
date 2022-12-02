@@ -18,7 +18,6 @@ export default function Login() {
   const onClick = () => {
     const users = JSON.parse(localStorage.getItem("users"))
     const user = users.find((user) => user.username === username)
-    console.log(user)
     if(!user){
       return alert("El usuario ingresado no se encuentra")
     }

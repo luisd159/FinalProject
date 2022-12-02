@@ -9,11 +9,9 @@ function Navbar() {
     return (
         <>
             <NavContainer>
-                <h1>Bienvenido {user ? user.username : "Tilin"}</h1>
                 <h2>SoyB<span>o</span>leta</h2>
                 <div>
                     <Link to="/">Inicio</Link>
-                    {user != null && (user["isSeller"]===true && <Link>Añadir Evento</Link>)}
                     {!isLoggedIn && <Link to="/login"><span><HiUser /></span>Ingresar</Link>}
                     {isLoggedIn && <a onClick={logout}>Logout</a>}
                 </div>
