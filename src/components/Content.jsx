@@ -50,7 +50,7 @@ export default function Content() {
         <>
             <PageContent>
                 <div className='title'>
-                    <h1>Bienvenido {user ? user.username : "Tilin"}</h1>
+                    {user != null && <h1>Bienvenido {user.username}</h1>}
                     {user != null && (user["isSeller"]===true && <button className='btn btn-primary mb-4' onClick={handleModalShow}>Añade un Evento</button>)}
                     <h1>Eventos Disponibles</h1>
                     <hr />
