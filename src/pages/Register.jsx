@@ -54,12 +54,12 @@ export default function Register() {
                 <hr />
               </div>
               <div className='my-3'>
-                <label className='form-label' for="username"><b>Usuario</b></label>
+                <label className='form-label' htmlFor="username"><b>Usuario</b></label>
                 <input className='form-control' type="text" placeholder="Digite el usuario" name="username" onChange={handleUsername} value={username} />
               </div>
 
               <div className='my-3'>
-                <label className='form-label' for="password"><b>Contraseña</b></label>
+                <label className='form-label' htmlFor="password"><b>Contraseña</b></label>
                 <input className='form-control' type="password" placeholder="Digite la contraseña" name="password" onChange={handlePassword} value={password} />
               </div>
 
