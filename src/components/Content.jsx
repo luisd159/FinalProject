@@ -79,7 +79,7 @@ export default function Content() {
     }
 
     const handleOffModalShowBuy = () => {
-        setModalShowEdit(false)
+        setModalShowBuy(false)
     }
 
     const handleChangeTitle = (e) => {
