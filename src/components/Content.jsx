@@ -128,7 +128,7 @@ export default function Content() {
     }
 
     const buyTicket = () => {
-        alert('Gracias por su compora')
+        alert('Gracias por su compra')
         setModalShowBuy(false);
     }
 
