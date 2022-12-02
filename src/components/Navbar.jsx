@@ -4,6 +4,7 @@ import { HiUser, HiPlus } from "react-icons/hi";
 import { Link } from 'react-router-dom';
 
 function Navbar() {
+    
     return (
         <>
             <NavContainer>
