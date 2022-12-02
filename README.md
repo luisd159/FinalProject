@@ -1,3 +1,3 @@
 #
 
-Para correr el programa tienes que ejercutar el comando "npm start"
+ESTE REPOSITORIO ESTA HOSTEADO EN FIREBASE 
