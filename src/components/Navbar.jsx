@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { HiUser } from "react-icons/hi";
+import { HiUser, HiPlus } from "react-icons/hi";
 
 function Navbar() {
     return (
@@ -9,6 +9,7 @@ function Navbar() {
                 <h2>SoyB<span>o</span>leta</h2>
                 <div>
                     <a href="/">Inicio</a>
+                    <a id='add_event' href="/"><span><HiPlus /></span>Añadir un evento</a>
                     <a href="/"><span><HiUser /></span>Ingresar</a>
                 </div>
             </NavContainer>
@@ -21,7 +22,7 @@ export default Navbar
 const NavContainer = styled.nav`
     h2 {
         margin-left: 1rem; 
-        font-size: 28px;
+        font-size: 2.25rem;
         color: white; 
         font-weight: 600;
         span {
@@ -29,11 +30,14 @@ const NavContainer = styled.nav`
             font-weight: bold; 
         }
     }
-    padding: .4rem; 
+    padding: 1rem; 
     background-color: #0170ce; 
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
+    box-shadow: 0 3px 20px rgb(0 0 0 / 10%);
+    position: relative;
+    text-decoration: none;
     a {
         span {
             font-size: 22px; 
