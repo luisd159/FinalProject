@@ -79,10 +79,12 @@ export default function Content() {
                                     <Row>
                                         <div className='date col col-4'>
                                             <h6>{event.date}</h6>
+                                            <button className='btn btn-primary my-1'>Editar</button>
+                                            <button className='btn btn-danger'>Eliminar</button>
                                         </div>
                                         <div className='buy col col-8 text-center'>
                                             <p>{event.place}</p>
-                                            <Button>Comprar Entrada</Button>
+                                            <Button className='mt-2'>Comprar Entrada</Button>
                                         </div>
                                     </Row>
                                 </div>
@@ -212,6 +214,9 @@ const PageContent = styled.div`
                     height: 200px;
                 }
                 .date {
+                    .btn {
+                        width: 100px; 
+                    }
                     padding: 0.2rem; 
                     font-weight: bold; 
                     text-align: center; 
