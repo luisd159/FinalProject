@@ -14,7 +14,7 @@ function Navbar() {
                 <div>
                     <Link to="/">Inicio</Link>
                     {!isLoggedIn && <Link to="/login"><span><HiUser /></span>Ingresar</Link>}
-                    {isLoggedIn && <a onClick={logout}><span><HiLogout /></span>Logout</a>}
+                    {isLoggedIn && <a role='button' onClick={logout}><span><HiLogout /></span>Logout</a>}
                 </div>
             </NavContainer>
         </>
