@@ -11,7 +11,6 @@ function Navbar() {
                 <h2>SoyB<span>o</span>leta</h2>
                 <div>
                     <Link to="/">Inicio</Link>
-                    <a id='add_event' href="/"><span><HiPlus /></span>Añadir un evento</a>
                     <Link to="/login"><span><HiUser /></span>Ingresar</Link>
                 </div>
             </NavContainer>
