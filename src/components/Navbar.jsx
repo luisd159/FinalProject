@@ -2,16 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 import { HiUser, HiPlus } from "react-icons/hi";
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../Auth.context';
 
 function Navbar() {
-    
+    const { user, isLoggedIn, logout } = useAuthContext()
     return (
         <>
             <NavContainer>
+                <h1>Bienvenido {user ? user.username : "Tilin"}</h1>
                 <h2>SoyB<span>o</span>leta</h2>
                 <div>
                     <Link to="/">Inicio</Link>
-                    <Link to="/login"><span><HiUser /></span>Ingresar</Link>
+                    {user != null && (user["isSeller"]===true && <Link>Añadir Evento</Link>)}
+                    {!isLoggedIn && <Link to="/login"><span><HiUser /></span>Ingresar</Link>}
+                    {isLoggedIn && <a onClick={logout}>Logout</a>}
                 </div>
             </NavContainer>
         </>

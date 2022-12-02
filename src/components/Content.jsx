@@ -6,8 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 const data = []
 
-const userLogged = JSON.parse(localStorage.getItem("UserLogged")) ? JSON.parse(localStorage.getItem("UserLogged")) : []
-
 class Content extends React.Component {
     constructor(props) {
         super()
@@ -56,7 +54,6 @@ class Content extends React.Component {
             <>
                 <PageContent>
                     <div className='title'>
-                        <h2>Bienvenido {userLogged.username}</h2>
                         <button className='btn btn-primary mb-4' onClick={() => this.showModalAdd()}>Añade un Evento</button>
                         <h1>Eventos Disponibles</h1>
                         <hr />

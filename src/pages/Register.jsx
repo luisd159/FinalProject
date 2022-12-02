@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate  } from 'react-router-dom'
 
 export default function Register() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [isSeller, setIsSeller] = useState(false)
@@ -37,9 +38,7 @@ export default function Register() {
     localStorage.setItem("users", JSON.stringify(users))
     
     alert("te has registrado con exito")
-    setUsername("")
-    setPassword("")
-    setIsSeller(false)
+    navigate("/login");
   }
 
   return (

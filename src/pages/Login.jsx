@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../Auth.context';
 
 export default function Login() {
-  
+  const navigate = useNavigate();
+  const { login } = useAuthContext();
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [isSeller, setIsSeller] = useState(false)
 
   const handleUsername = (e) => {
     setUsername(e.target.value)
@@ -15,31 +16,19 @@ export default function Login() {
   }
 
   const onClick = () => {
-  
     const users = JSON.parse(localStorage.getItem("users"))
-    for (let index = 0; index <= users.length; index++) {
-      console.log(users[index].username)
-      console.log(index)
-      if (users[index].username === username) {
-          if(users[index].password === password){
-            const userLog ={
-              username,
-              password,
-              isSeller : users[index].isSeller
-            }
-            localStorage.setItem("UserLogged", JSON.stringify(userLog))
-            alert("estas ingresado con exito")
-          }else{
-            alert("Estas escribiendo una contraseña equivocada")
-          }
-      }else{
-        alert("Estas Escribiendo un Usuario Invalido")
-      }
+    const user = users.find((user) => user.username === username)
+    console.log(user)
+    if(!user){
+      return alert("El usuario ingresado no se encuentra")
     }
-    
-
+    if(user.password !== password){
+      return alert("Contraseña Incorrecta")
+    }
+    localStorage.setItem("UserLogged", JSON.stringify(user))
+    login(user)
+    navigate("/");
   }
-
 
   return (
     <div>
