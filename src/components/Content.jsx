@@ -11,6 +11,7 @@ export default function Content() {
 
     const [modalShow, setModalShow] = useState(false)
     const [modalShowEdit, setModalShowEdit] = useState(false)
+    const [modalShowBuy, setModalShowBuy] = useState(false)
     const [title, setTitle] = useState("")
     const [date, setDate] = useState("")
     const [place, setPlace] = useState("")
@@ -51,11 +52,24 @@ export default function Content() {
         setPrice(event.price)
     }
 
+    const handleModalShowBuy = (event) => {
+        setModalShowBuy(true)
+        setId(event.id)
+        setTitle(event.title)
+        setDate(event.date)
+        setPlace(event.place)
+        setPrice(event.price)
+    }
+
     const handleOffModalShow = () => {
         setModalShow(false)
     }
 
     const handleOffModalShowEdit = () => {
+        setModalShowEdit(false)
+    }
+
+    const handleOffModalShowBuy = () => {
         setModalShowEdit(false)
     }
 
@@ -113,6 +127,11 @@ export default function Content() {
         alert("Eliminado con exito")
     }
 
+    const buyTicket = () => {
+        alert('Gracias por su compora')
+        setModalShowBuy(false);
+    }
+
     return (
         <>
             <PageContent>
@@ -142,7 +161,7 @@ export default function Content() {
                                         </div>
                                         <div className='buy col col-8 text-center'>
                                             <p>{event.place}</p>
-                                            <Button className='mt-2'>Comprar Entrada</Button>
+                                            <Button onClick={()=>handleModalShowBuy(event)} className='mt-2'>Comprar Entrada</Button>
                                         </div>
                                     </Row>
                                 </div>
@@ -314,6 +333,82 @@ export default function Content() {
                     <Button
                         className="btn btn-danger"
                         onClick={handleOffModalShowEdit}
+                    >
+                        Cancelar
+                    </Button>
+                </ModalFooter>
+            </Modal>
+            <Modal isOpen={modalShowBuy}>
+                <ModalHeader>
+                    <div><h3>Comprar Entrada</h3></div>
+                </ModalHeader>
+                <ModalBody>
+                    <FormGroup>
+                        <label>
+                            Título:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="title"
+                            type="text"
+                            readOnly
+                            onChange={handleChangeTitle}
+                            value={title}
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <label>
+                            Fecha:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="date"
+                            type="date"
+                            readOnly
+                            onChange={handleChangeDate}
+                            value={date}
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <label>
+                            Lugar:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="place"
+                            type="text"
+                            readOnly
+                            onChange={handleChangePlace}
+                            value={place}
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <label>
+                            Precio de la entrada:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="price"
+                            type="text"
+                            readOnly
+                            onChange={handleChangePrice}
+                            value={price}
+                        />
+                    </FormGroup>
+                </ModalBody>
+                <ModalFooter>
+                    <Button
+                        color="primary"
+                        onClick={() => buyTicket()}
+                    >
+                        Comprar
+                    </Button>
+                    <Button
+                        className="btn btn-danger"
+                        onClick={handleOffModalShowBuy}
                     >
                         Cancelar
                     </Button>
