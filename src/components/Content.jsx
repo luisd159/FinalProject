@@ -39,21 +39,22 @@ export default function Content() {
     }
 
     var data = JSON.parse(localStorage.getItem("events")) ? JSON.parse(localStorage.getItem("events")) : []
-    
+
     const insertar = () => {
         data.push(form)
         localStorage.setItem("events", JSON.stringify(data))
         setModalShow(false)
     }
-    
+
     return (
         <>
             <PageContent>
                 <div className='title'>
-                    {user != null && <h1>Bienvenido {user.username}</h1>}
-                    {user != null && (user["isSeller"]===true && <button className='btn btn-primary mb-4' onClick={handleModalShow}>Añade un Evento</button>)}
+                    {user != null && <h1 className='welcome'>Bienvenido <span className='username'>{user.username}</span></h1>}
+                    {user != null && <hr />}
+                    {user != null && (user["isSeller"] === true && <button className='btn btn-primary mb-4' onClick={handleModalShow}>Añade un Evento</button>)}
                     <h1>Eventos Disponibles</h1>
-                    <hr />
+                    <hr className='event_hr'/>
                 </div>
                 <Container>
                     <Row>
@@ -150,6 +151,15 @@ const PageContent = styled.div`
     margin-right: 3rem; 
     .title {
         margin-top: 2rem;
+        .welcome {
+            font-size: 2.2em; 
+            .username {
+                color: #f3be0b
+            }
+        }
+        hr {
+            margin-bottom: 3rem; 
+        }
         h2 {
             margin-bottom: 2rem;
             font-size: 2.5em; 
@@ -158,7 +168,7 @@ const PageContent = styled.div`
         color: #626263; 
         font-size: 1.8em; 
         }  
-        hr {
+        .event_hr {
             background-color: #0170ce; 
             max-width: 150px; 
             margin-left: 0;  
