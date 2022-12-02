@@ -9,7 +9,6 @@ import { useAuthContext } from '../Auth.context';
 export default function Content() {
     const { user, isLoggedIn, logout } = useAuthContext()
 
-    const [dataForm, setDataForm] = useState(data)
     const [modalShow, setModalShow] = useState(false)
     const [title, setTitle] = useState("")
     const [date, setDate] = useState("")
