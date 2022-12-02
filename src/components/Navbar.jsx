@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { HiUser, HiPlus } from "react-icons/hi";
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     return (
@@ -8,9 +9,9 @@ function Navbar() {
             <NavContainer>
                 <h2>SoyB<span>o</span>leta</h2>
                 <div>
-                    <a href="/">Inicio</a>
+                    <Link to="/">Inicio</Link>
                     <a id='add_event' href="/"><span><HiPlus /></span>Añadir un evento</a>
-                    <a href="/"><span><HiUser /></span>Ingresar</a>
+                    <Link to="/login"><span><HiUser /></span>Ingresar</Link>
                 </div>
             </NavContainer>
         </>

@@ -8,10 +8,12 @@ const data = [
 ]
 
 class Content extends React.Component {
+    
     state = {
         data: data
     }
     render() {
+        
         return (
             <>
                 <PageContent>
@@ -51,6 +53,8 @@ class Content extends React.Component {
         )
     }
 }
+
+
 
 export default Content
 
