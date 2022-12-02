@@ -51,7 +51,7 @@ export default function Login() {
         <label for="password"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="password" onChange={handlePassword} value={password} />
 
-        <button type="submit" onClick={onClick} >Login</button>
+        <button type="submit" onClick={onClick}>Login</button>
         <Link to="/register">REGISTRATE GRATIS AQUI</Link>
       </div>
 

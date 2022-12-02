@@ -56,7 +56,7 @@ class Content extends React.Component {
             <>
                 <PageContent>
                     <div className='title'>
-                        <h2>Bienvenido Tilín</h2>
+                        <h2>Bienvenido {userLogged.username}</h2>
                         <button className='btn btn-primary mb-4' onClick={() => this.showModalAdd()}>Añade un Evento</button>
                         <h1>Eventos Disponibles</h1>
                         <hr />
