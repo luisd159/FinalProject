@@ -126,8 +126,8 @@ export default function Content() {
                                     <Row>
                                         <div className='date col col-4'>
                                             <h6>{event.date}</h6>
-                                            {user != null && user['isSeller'] === true && <button onClick={() => handleModalShowEdit(event)} className='btn btn-primary my-1'>Editar</button>}
-                                            {user != null && user['isSeller'] === true && <button className='btn btn-danger'>Eliminar</button>}
+                                            {user != null && user['isSeller'] === true && event.userName === nombre && <button onClick={() => handleModalShowEdit(event)} className='btn btn-primary my-1'>Editar</button>}
+                                            {user != null && user['isSeller'] === true && event.userName === nombre && <button className='btn btn-danger'>Eliminar</button>}
                                         </div>
                                         <div className='buy col col-8 text-center'>
                                             <p>{event.place}</p>
@@ -296,7 +296,7 @@ export default function Content() {
                 <ModalFooter>
                     <Button
                         color="primary"
-                        onClick={()=>editar(id, title, date, place, price)}
+                        onClick={() => editar(id, title, date, place, price)}
                     >
                         Editar
                     </Button>
