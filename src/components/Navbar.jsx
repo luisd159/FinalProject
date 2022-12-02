@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { HiUser, HiPlus } from "react-icons/hi";
+import { HiUser, HiLogout } from "react-icons/hi";
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../Auth.context';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Navbar() {
     const { user, isLoggedIn, logout } = useAuthContext()
@@ -13,7 +14,7 @@ function Navbar() {
                 <div>
                     <Link to="/">Inicio</Link>
                     {!isLoggedIn && <Link to="/login"><span><HiUser /></span>Ingresar</Link>}
-                    {isLoggedIn && <a onClick={logout}>Logout</a>}
+                    {isLoggedIn && <a role='button' onClick={logout}><span><HiLogout /></span>Logout</a>}
                 </div>
             </NavContainer>
         </>
