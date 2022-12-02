@@ -14,8 +14,8 @@ export default function Content() {
     const [date, setDate] = useState("")
     const [place, setPlace] = useState("")
     const [price, setPrice] = useState("")
-    
-    const nombre = isLoggedIn? user.username : ""
+
+    const nombre = isLoggedIn ? user.username : ""
     const form = {
         userName: nombre,
         title,
@@ -23,7 +23,7 @@ export default function Content() {
         place,
         price
     }
-    
+
     const handleModalShow = () => {
         setModalShow(true)
     }
@@ -63,7 +63,7 @@ export default function Content() {
                     {user != null && <hr />}
                     {user != null && (user["isSeller"] === true && <button className='btn btn-primary mb-4' onClick={handleModalShow}>Añade un Evento</button>)}
                     <h1>Eventos Disponibles</h1>
-                    <hr className='event_hr'/>
+                    <hr className='event_hr' />
                 </div>
                 <Container>
                     <Row>
@@ -79,8 +79,8 @@ export default function Content() {
                                     <Row>
                                         <div className='date col col-4'>
                                             <h6>{event.date}</h6>
-                                            <button className='btn btn-primary my-1'>Editar</button>
-                                            <button className='btn btn-danger'>Eliminar</button>
+                                            {user != null && user['isSeller'] === true && <button className='btn btn-primary my-1'>Editar</button>}
+                                            {user != null && user['isSeller'] === true && <button className='btn btn-danger'>Eliminar</button>}
                                         </div>
                                         <div className='buy col col-8 text-center'>
                                             <p>{event.place}</p>
