@@ -19,6 +19,7 @@ export default function Content() {
     const [place, setPlace] = useState("")
     const [price, setPrice] = useState("")
     const [id, setId] = useState("")
+    const [img, setImg] = useState("")
     const [events, setEvents] = useState([])
 
     useEffect(() => {
@@ -32,7 +33,8 @@ export default function Content() {
         title,
         date,
         place,
-        price
+        price,
+        img,
     }
 
     //Handles de las tablas modales
@@ -43,6 +45,7 @@ export default function Content() {
         setDate('')
         setPlace('')
         setPrice('')
+        setImg('')
     }
 
     const handleModalShowEdit = (event) => {
@@ -55,19 +58,19 @@ export default function Content() {
     }
 
     const handleModalShowBuy = (event) => {
-        if(isLoggedIn){
+        if (isLoggedIn) {
             setModalShowBuy(true)
             setId(event.id)
             setTitle(event.title)
             setDate(event.date)
             setPlace(event.place)
             setPrice(event.price)
-        }else{
+        } else {
             navigate("/login")
             return alert("No estas logueado TILIN, Debes iniciar sesion primero")
-            
+
         }
-        
+
     }
 
     const handleOffModalShow = () => {
@@ -82,6 +85,8 @@ export default function Content() {
         setModalShowEdit(false)
     }
 
+
+    //Handle de los changes
     const handleChangeTitle = (e) => {
         setTitle(e.target.value)
     }
@@ -95,6 +100,12 @@ export default function Content() {
     const handleChangePrice = (e) => {
         setPrice(e.target.value)
     }
+
+    const handleChangeImg = (e) => {
+        setImg(e.target.value)
+    }
+
+    //Funciones del CRUD
 
     const insertar = () => {
         form.id = '' + (events.length + 1) + '';
@@ -121,7 +132,7 @@ export default function Content() {
         setModalShowEdit(false);
     }
 
-    const eliminar = (eventoEliminar) =>{
+    const eliminar = (eventoEliminar) => {
         var lista = events;
         var temp = []
         lista.map((event) => {
@@ -158,7 +169,7 @@ export default function Content() {
                             <Col lg={3}>
                                 <div className='card text-center'>
                                     <a href="/">
-                                        <img src={require("../imgs/shout.png")} alt="" />
+                                        <img className='rounded img-fluid' src={event.img} alt="" />
                                     </a>
                                     <h3 className='text-center px-3 my-1'>{event.title}</h3>
                                     <hr className='mx-3' />
@@ -166,11 +177,11 @@ export default function Content() {
                                         <div className='date col col-4'>
                                             <h6>{event.date}</h6>
                                             {user != null && user['isSeller'] === true && event.userName === nombre && <button onClick={() => handleModalShowEdit(event)} className='btn btn-primary my-1'>Editar</button>}
-                                            {user != null && user['isSeller'] === true && event.userName === nombre && <button className='btn btn-danger'onClick={() => eliminar(event)} >Eliminar</button>}
+                                            {user != null && user['isSeller'] === true && event.userName === nombre && <button className='btn btn-danger' onClick={() => eliminar(event)} >Eliminar</button>}
                                         </div>
                                         <div className='buy col col-8 text-center'>
                                             <p>{event.place}</p>
-                                            <Button onClick={()=>handleModalShowBuy(event)} className='mt-2'>Comprar Entrada</Button>
+                                            <Button onClick={() => handleModalShowBuy(event)} className='mt-2'>Comprar Entrada</Button>
                                         </div>
                                     </Row>
                                 </div>
@@ -245,6 +256,19 @@ export default function Content() {
                             type="text"
                             onChange={handleChangePrice}
                             value={price}
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <label>
+                            Url de Imagen:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="img"
+                            type="text"
+                            onChange={handleChangeImg}
+                            value={img}
                         />
                     </FormGroup>
                 </ModalBody>
