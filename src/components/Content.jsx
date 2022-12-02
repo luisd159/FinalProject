@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Container, Col, Row, Button } from 'react-bootstrap'
 import { Modal, ModalBody, ModalFooter, ModalHeader, FormGroup } from 'reactstrap'
@@ -10,13 +10,22 @@ export default function Content() {
     const { user, isLoggedIn, logout } = useAuthContext()
 
     const [modalShow, setModalShow] = useState(false)
+    const [modalShowEdit, setModalShowEdit] = useState(false)
     const [title, setTitle] = useState("")
     const [date, setDate] = useState("")
     const [place, setPlace] = useState("")
     const [price, setPrice] = useState("")
+    const [id, setId] = useState("")
+
+    const [events, setEvents] = useState([])
+
+    useEffect(() => {
+        setEvents(JSON.parse(localStorage.getItem("events")) ? JSON.parse(localStorage.getItem("events")) : [])
+    }, [])
 
     const nombre = isLoggedIn ? user.username : ""
     const form = {
+        id,
         userName: nombre,
         title,
         date,
@@ -24,14 +33,34 @@ export default function Content() {
         price
     }
 
+    //Handles de las tablas modales
     const handleModalShow = () => {
         setModalShow(true)
+        setId('')
+        setTitle('')
+        setDate('')
+        setPlace('')
+        setPrice('')
+    }
+
+    const handleModalShowEdit = (event) => {
+        setModalShowEdit(true)
+        setId(event.id)
+        setTitle(event.title)
+        setDate(event.date)
+        setPlace(event.place)
+        setPrice(event.price)
     }
 
     const handleOffModalShow = () => {
         setModalShow(false)
     }
 
+    const handleOffModalShowEdit = () => {
+        setModalShowEdit(false)
+    }
+
+    //Handle Changes
     const handleChangeTitle = (e) => {
         setTitle(e.target.value)
     }
@@ -46,13 +75,31 @@ export default function Content() {
         setPrice(e.target.value)
     }
 
-    var data = JSON.parse(localStorage.getItem("events")) ? JSON.parse(localStorage.getItem("events")) : []
+
 
 
     const insertar = () => {
-        data.push(form)
-        localStorage.setItem("events", JSON.stringify(data))
+        form.id = '' + (events.length + 1) + '';
+        events.push(form)
+        localStorage.setItem("events", JSON.stringify(events))
         setModalShow(false)
+    }
+
+    const editar = (id, title, date, place, price) => {
+        var cont = 0;
+        var lista = events;
+        // eslint-disable-next-line array-callback-return
+        lista.map((event) => {
+            if (id === event.id) {
+                lista[cont].title = title;
+                lista[cont].date = date;
+                lista[cont].place = place;
+                lista[cont].price = price;
+            }
+            cont++;
+        });
+        localStorage.setItem("events", JSON.stringify(lista))
+        setModalShowEdit(false);
     }
 
     return (
@@ -67,7 +114,7 @@ export default function Content() {
                 </div>
                 <Container>
                     <Row>
-                        {data.map((event) => (
+                        {events.map((event) => (
                             // Estos elementos se añaden con el crud
                             <Col lg={3}>
                                 <div className='card text-center'>
@@ -79,7 +126,7 @@ export default function Content() {
                                     <Row>
                                         <div className='date col col-4'>
                                             <h6>{event.date}</h6>
-                                            {user != null && user['isSeller'] === true && <button className='btn btn-primary my-1'>Editar</button>}
+                                            {user != null && user['isSeller'] === true && <button onClick={() => handleModalShowEdit(event)} className='btn btn-primary my-1'>Editar</button>}
                                             {user != null && user['isSeller'] === true && <button className='btn btn-danger'>Eliminar</button>}
                                         </div>
                                         <div className='buy col col-8 text-center'>
@@ -98,6 +145,18 @@ export default function Content() {
                     <div><h3>Añadir Evento</h3></div>
                 </ModalHeader>
                 <ModalBody>
+                    <FormGroup>
+                        <label>
+                            Id:
+                        </label>
+
+                        <input
+                            className="form-control"
+                            readOnly
+                            type="text"
+                            value={events.length + 1}
+                        />
+                    </FormGroup>
                     <FormGroup>
                         <label>
                             Título:
@@ -165,46 +224,130 @@ export default function Content() {
                     </Button>
                 </ModalFooter>
             </Modal>
+            <Modal isOpen={modalShowEdit}>
+                <ModalHeader>
+                    <div><h3>Editar Evento</h3></div>
+                </ModalHeader>
+                <ModalBody>
+                    <FormGroup>
+                        <label>
+                            Id:
+                        </label>
+
+                        <input
+                            className="form-control"
+                            readOnly
+                            type="text"
+                            value={id}
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <label>
+                            Título:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="title"
+                            type="text"
+                            onChange={handleChangeTitle}
+                            value={title}
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <label>
+                            Fecha:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="date"
+                            type="date"
+                            onChange={handleChangeDate}
+                            value={date}
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <label>
+                            Lugar:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="place"
+                            type="text"
+                            onChange={handleChangePlace}
+                            value={place}
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <label>
+                            Precio por entrada:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="price"
+                            type="text"
+                            onChange={handleChangePrice}
+                            value={price}
+                        />
+                    </FormGroup>
+                </ModalBody>
+                <ModalFooter>
+                    <Button
+                        color="primary"
+                        onClick={()=>editar(id, title, date, place, price)}
+                    >
+                        Editar
+                    </Button>
+                    <Button
+                        className="btn btn-danger"
+                        onClick={handleOffModalShowEdit}
+                    >
+                        Cancelar
+                    </Button>
+                </ModalFooter>
+            </Modal>
         </>
     )
 
 }
 
 const PageContent = styled.div`
-    margin-left: 3rem; 
-    margin-right: 3rem; 
+    margin-left: 3rem;
+    margin-right: 3rem;
     .title {
         margin-top: 2rem;
         .welcome {
-            font-size: 2.2em; 
+            font-size: 2.2em;
             .username {
                 color: #f3be0b
             }
         }
         hr {
-            margin-bottom: 3rem; 
+            margin-bottom: 3rem;
         }
         h2 {
             margin-bottom: 2rem;
-            font-size: 2.5em; 
+            font-size: 2.5em;
         }
         h1 {
-        color: #626263; 
-        font-size: 1.8em; 
-        }  
+        color: #626263;
+        font-size: 1.8em;
+        }
         .event_hr {
-            background-color: #0170ce; 
-            max-width: 150px; 
-            margin-left: 0;  
-            height: 5px; 
-        } 
-    } 
+            background-color: #0170ce;
+            max-width: 150px;
+            margin-left: 0;
+            height: 5px;
+        }
+    }
     .container {
-        margin-top: 2rem; 
+        margin-top: 2rem;
         .row {
             .card {
                 .row {
-                    margin-left: 1rem; 
+                    margin-left: 1rem;
                 }
                 margin-top: 1rem;
                 box-shadow: 0 3px 20px rgb(0 0 0 / 10%);
@@ -215,16 +358,16 @@ const PageContent = styled.div`
                 }
                 .date {
                     .btn {
-                        width: 100px; 
+                        width: 100px;
                     }
-                    padding: 0.2rem; 
-                    font-weight: bold; 
-                    text-align: center; 
+                    padding: 0.2rem;
+                    font-weight: bold;
+                    text-align: center;
                 }
                 .buy {
-                    padding: 0.2rem; 
+                    padding: 0.2rem;
                     font-weight: 500;
-                    color: #5f5f5f; 
+                    color: #5f5f5f;
                 }
             }
         }
