@@ -3,66 +3,53 @@ import styled from 'styled-components'
 import { Container, Col, Row, Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function Content() {
-    return (
-        <>
-            <PageContent>
-                <div className='title'>
-                    <h1>Eventos Disponibles</h1>
-                    <hr />
-                </div>
-                <Container>
-                    <Row>
-                        {/* Estos elementos se tienen que añadir en el crud */}
-                        <Col lg={3}>
-                            <div className='card text-center'>
-                                <a href="/">
-                                    <img src={require("../imgs/shout.png")} alt="" />
-                                </a>
-                                <h3 className='text-center px-3 my-1'>AHHHH</h3>
-                                <hr className='mx-3' />
-                                <Row>
-                                    <div className='date col col-4 text-center'>
-                                        JUE
-                                        <div className='day'>
-                                            01
+const data = [
+    { title: 'AHHH', date: '01/12/2022', place: 'Estadio El Campín' }
+]
+
+class Content extends React.Component {
+    state = {
+        data: data
+    }
+    render() {
+        return (
+            <>
+                <PageContent>
+                    <div className='title'>
+                        <h1>Eventos Disponibles</h1>
+                        <hr />
+                    </div>
+                    <Container>
+                        <Row>
+                            {/* Estos elementos se tienen que añadir en el crud */}
+                            <Col lg={3}>
+                                <div className='card text-center'>
+                                    <a href="/">
+                                        <img src={require("../imgs/shout.png")} alt="" />
+                                    </a>
+                                    <h3 className='text-center px-3 my-1'>AHHHH</h3>
+                                    <hr className='mx-3' />
+                                    <Row>
+                                        <div className='date col col-4 text-center'>
+                                            JUE
+                                            <div className='day'>
+                                                01
+                                            </div>
+                                            DIC 2022
                                         </div>
-                                        DIC 2022
-                                    </div>
-                                    <div className='buy col col-8 text-center'>
-                                        <p>Estadio El Campín</p>
-                                        <Button>Comprar Entrada</Button>
-                                    </div>
-                                </Row>
-                            </div>
-                        </Col>
-                        <Col lg={3}>
-                            <div className='card text-center'>
-                                <a href="/">
-                                    <img src={require("../imgs/shout.png")} alt="" />
-                                </a>
-                                <h3 className='text-center px-3 my-1'>AHHHH</h3>
-                                <hr className='mx-3' />
-                                <Row>
-                                    <div className='date col col-4 text-center'>
-                                        JUE
-                                        <div className='day'>
-                                            01
+                                        <div className='buy col col-8 text-center'>
+                                            <p>Estadio El Campín</p>
+                                            <Button>Comprar Entrada</Button>
                                         </div>
-                                        DIC 2022
-                                    </div>
-                                    <div className='buy col col-8 text-center'>
-                                        <p>Estadio El Campín</p>
-                                        <Button>Comprar Entrada</Button>
-                                    </div>
-                                </Row>
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>
-            </PageContent>
-        </>
-    )
+                                    </Row>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
+                </PageContent>
+            </>
+        )
+    }
 }
 
 export default Content
