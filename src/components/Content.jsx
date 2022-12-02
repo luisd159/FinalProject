@@ -13,11 +13,15 @@ export default function Content() {
     const [title, setTitle] = useState("")
     const [date, setDate] = useState("")
     const [place, setPlace] = useState("")
+    const [price, setPrice] = useState("")
+    const [username, setUsername] = useState("")
 
     const form = {
+        username: user.username,
         title,
         date,
-        place
+        place,
+        price
     }
     const handleModalShow = () => {
         setModalShow(true)
@@ -37,7 +41,12 @@ export default function Content() {
         setPlace(e.target.value)
     }
 
+    const handleChangePrice = (e) => {
+        setPrice(e.target.value)
+    }
+
     var data = JSON.parse(localStorage.getItem("events")) ? JSON.parse(localStorage.getItem("events")) : []
+
 
     const insertar = () => {
         data.push(form)
@@ -122,6 +131,19 @@ export default function Content() {
                             type="text"
                             onChange={handleChangePlace}
                             value={place}
+                        />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <label>
+                            Precio por entrada:
+                        </label>
+                        <input
+                            className="form-control"
+                            name="price"
+                            type="text"
+                            onChange={handleChangePrice}
+                            value={price}
                         />
                     </FormGroup>
                 </ModalBody>
