@@ -16,7 +16,6 @@ export default function Content() {
     const [place, setPlace] = useState("")
     const [price, setPrice] = useState("")
     const [id, setId] = useState("")
-
     const [events, setEvents] = useState([])
 
     useEffect(() => {
@@ -60,7 +59,6 @@ export default function Content() {
         setModalShowEdit(false)
     }
 
-    //Handle Changes
     const handleChangeTitle = (e) => {
         setTitle(e.target.value)
     }
@@ -75,20 +73,17 @@ export default function Content() {
         setPrice(e.target.value)
     }
 
-
-
-
     const insertar = () => {
         form.id = '' + (events.length + 1) + '';
         events.push(form)
         localStorage.setItem("events", JSON.stringify(events))
+        setEvents(events)
         setModalShow(false)
     }
 
     const editar = (id, title, date, place, price) => {
         var cont = 0;
         var lista = events;
-        // eslint-disable-next-line array-callback-return
         lista.map((event) => {
             if (id === event.id) {
                 lista[cont].title = title;
@@ -99,7 +94,23 @@ export default function Content() {
             cont++;
         });
         localStorage.setItem("events", JSON.stringify(lista))
+        setEvents(lista)
         setModalShowEdit(false);
+    }
+
+    const eliminar = (eventoEliminar) =>{
+        var lista = events;
+        var temp = []
+        lista.map((event) => {
+            if (eventoEliminar.id !== event.id) {
+                temp.push(event)
+            }
+        });
+        console.log(temp)
+        localStorage.removeItem("events")
+        localStorage.setItem("events", JSON.stringify(temp))
+        setEvents(temp)
+        alert("Eliminado con exito")
     }
 
     return (
@@ -127,7 +138,7 @@ export default function Content() {
                                         <div className='date col col-4'>
                                             <h6>{event.date}</h6>
                                             {user != null && user['isSeller'] === true && event.userName === nombre && <button onClick={() => handleModalShowEdit(event)} className='btn btn-primary my-1'>Editar</button>}
-                                            {user != null && user['isSeller'] === true && event.userName === nombre && <button className='btn btn-danger'>Eliminar</button>}
+                                            {user != null && user['isSeller'] === true && event.userName === nombre && <button className='btn btn-danger'onClick={() => eliminar(event)} >Eliminar</button>}
                                         </div>
                                         <div className='buy col col-8 text-center'>
                                             <p>{event.place}</p>
