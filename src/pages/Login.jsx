@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../Auth.context';
+import { Container, Row, Col } from 'react-bootstrap';
+import styled from 'styled-components';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -19,10 +21,10 @@ export default function Login() {
     const users = JSON.parse(localStorage.getItem("users"))
     const user = users.find((user) => user.username === username)
     console.log(user)
-    if(!user){
+    if (!user) {
       return alert("El usuario ingresado no se encuentra")
     }
-    if(user.password !== password){
+    if (user.password !== password) {
       return alert("Contraseña Incorrecta")
     }
     localStorage.setItem("UserLogged", JSON.stringify(user))
@@ -31,19 +33,42 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <>
+      <LoginContent>
+        <Container>
+          <Row>
+            <Col>
+              <div className='mt-3'>
+                <h1>Iniciar Sesión</h1>
+              </div>
+              <div className='my-3'>
+                <label className='form-label' htmlFor="username">Usuario</label>
+                <input id='username' className='form-control' type="text" placeholder="Digite su nombre de usuario" name="username" onChange={handleUsername} value={username} />
+              </div>
 
-    <div className="container">
-        <label for="username"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" onChange={handleUsername} value={username} />
+              <div className='my-3'>
+                <label className='form-label' htmlFor="password">Contraseña</label>
+                <input id='password' className='form-control' type="password" placeholder="Digite su contraseña" name="password" onChange={handlePassword} value={password} />
+              </div>
 
-        <label for="password"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" onChange={handlePassword} value={password} />
-
-        <button type="submit" onClick={onClick}>Login</button>
-        <Link to="/register">REGISTRATE GRATIS AQUI</Link>
-      </div>
-
-    </div>
+              <div>
+                <button className='btn btn-primary btn-block d-block mb-3' type="submit" onClick={onClick}>Login</button>
+                <Link className='link' to="/register">¿Aún no tienes una cuenta?  REGÍSTRATE GRATIS AQUÍ</Link>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </LoginContent>
+    </>
   )
 }
+
+const LoginContent = styled.div`
+  h1 {
+    color: #626263;
+    font-size: 2em; 
+  }
+  .link {
+    text-decoration: none; 
+  }
+`
