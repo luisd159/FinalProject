@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 const data = []
 
-const userLogged = JSON.parse(localStorage.getItem("UserLogged"))
+const userLogged = JSON.parse(localStorage.getItem("UserLogged")) ? JSON.parse(localStorage.getItem("UserLogged")) : []
 
 class Content extends React.Component {
     constructor(props) {
