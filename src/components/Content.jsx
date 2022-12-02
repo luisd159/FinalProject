@@ -14,15 +14,16 @@ export default function Content() {
     const [date, setDate] = useState("")
     const [place, setPlace] = useState("")
     const [price, setPrice] = useState("")
-    const [username, setUsername] = useState("")
-
+    
+    const nombre = isLoggedIn? user.username : ""
     const form = {
-        username: user.username,
+        userName: nombre,
         title,
         date,
         place,
         price
     }
+    
     const handleModalShow = () => {
         setModalShow(true)
     }
