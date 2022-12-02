@@ -4,11 +4,13 @@ import { Container, Col, Row, Button } from 'react-bootstrap'
 import { Modal, ModalBody, ModalFooter, ModalHeader, FormGroup } from 'reactstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useAuthContext } from '../Auth.context';
+import { useNavigate } from 'react-router-dom'
+
 
 
 export default function Content() {
     const { user, isLoggedIn, logout } = useAuthContext()
-
+    const navigate = useNavigate();
     const [modalShow, setModalShow] = useState(false)
     const [modalShowEdit, setModalShowEdit] = useState(false)
     const [modalShowBuy, setModalShowBuy] = useState(false)
@@ -53,12 +55,19 @@ export default function Content() {
     }
 
     const handleModalShowBuy = (event) => {
-        setModalShowBuy(true)
-        setId(event.id)
-        setTitle(event.title)
-        setDate(event.date)
-        setPlace(event.place)
-        setPrice(event.price)
+        if(isLoggedIn){
+            setModalShowBuy(true)
+            setId(event.id)
+            setTitle(event.title)
+            setDate(event.date)
+            setPlace(event.place)
+            setPrice(event.price)
+        }else{
+            navigate("/login")
+            return alert("No estas logueado TILIN, Debes iniciar sesion primero")
+            
+        }
+        
     }
 
     const handleOffModalShow = () => {
